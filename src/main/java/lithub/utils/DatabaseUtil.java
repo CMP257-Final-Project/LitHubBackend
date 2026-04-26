@@ -24,10 +24,10 @@ public class DatabaseUtil {
     public static void main(String[] args) {
         try {
             Connection conn = getConnection();
-            System.out.println("✅ Database connected successfully!");
+            System.out.println("Database connected successfully!");
             conn.close();
         } catch (SQLException e) {
-            System.out.println("❌ Database connection failed: " + e.getMessage());
+            System.out.println("Database connection failed: " + e.getMessage());
         }
     }
 }
