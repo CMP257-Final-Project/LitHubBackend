@@ -1,0 +1,442 @@
+/* WE ARE INITILIAING DEFUALT COLOURS */
+
+:root {
+    --primary:      #f4a226;
+  --primary-dark: #c47d0e;
+  --accent:       #fffbf0;
+  --text-hero:    #2c1a00;
+  --card-bg:      #fffdf5;
+  --tag-bg:       #fef0c7;
+  --tag-text:     #92510a;
+}
+
+body.theme-feel-good {
+  --primary:      #f4a226;
+  --primary-dark: #c47d0e;
+  --accent:       #fffbf0;
+  --text-hero:    #2c1a00;
+  --card-bg:      #fffdf5;
+  --tag-bg:       #fef0c7;
+  --tag-text:     #92510a;
+}
+
+body.theme-dark-twisted {
+  --primary:      #a855f7;
+  --primary-dark: #a855f7;
+  --accent:       #000000;
+  --text-hero:    #e8d5ff;
+  --card-bg:      #16213e;
+  --tag-bg:       #2d1b4e;
+  --tag-text:     #c084fc;
+}
+
+/* CANT PUT DOWN */
+body.theme-cant-put-down {
+  --primary:      #e63946;
+  --primary-dark: #b5182a;
+  --accent:       #fff5f5;
+  --text-hero:    #ffffff;
+  --card-bg:      #ffffff;
+  --tag-bg:       #fde8ea;
+  --tag-text:     #b5182a;
+}
+
+/* MIND BENDING
+body.theme-mind-bending {
+  --primary:      #00c2ff;
+  --primary-dark: #0077b6;
+  --accent:       #0f172a;
+  --text-hero:    #e0f2fe;
+  --card-bg:      #111827;
+  --tag-bg:       #1e3a8a;
+  --tag-text:     #93c5fd;
+} */
+
+/* MAKE ME CRY */
+body.theme-make-me-cry {
+  --primary:      #3b82f6;
+  --primary-dark: #1e40af;
+  --accent:       #eff6ff;
+  --text-hero:    #1e3a8a;
+  --card-bg:      #ffffff;
+  --tag-bg:       #dbeafe;
+  --tag-text:     #1e40af;
+}
+
+/* LAUGH OUT LOUD */
+body.theme-laugh-out-loud {
+  --primary:      #facc15;
+  --primary-dark: #eab308;
+  --accent:       #fffbea;
+  --text-hero:    #78350f;
+  --card-bg:      #ffffff;
+  --tag-bg:       #fef08a;
+  --tag-text:     #854d0e;
+}
+
+/* hero section */
+.mood-hero {
+  min-height: 20px;
+  background: linear-gradient(var(--primary) , var(--primary-dark) );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem  1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.mood-back-btn {
+  position: absolute;
+  top: 1.9rem;
+  left: 2rem;
+  color: var(--text-hero);
+  text-decoration: none;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 1.8rem;
+  opacity: 0.75;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: opacity 0.2s;
+  z-index: 10;
+}
+
+.mood-back-btn:hover { opacity: 1; color: var(--text-hero); }
+
+.mood-hero-emoji {
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+  animation: float 3s ease-in-out infinite;
+  position: relative;
+  z-index: 2;
+}
+
+.mood-hero-tagline {
+  font-family: 'Playfair Display', serif;
+  font-size: 4.8rem;
+  font-style: italic;
+  color: var(--text-hero);
+  margin-bottom: 1rem;
+  line-height: 1.1;
+  position: relative;
+  z-index: 2;
+  animation: slideUp 0.7s ease forwards;
+  opacity: 0;
+}
+ 
+.mood-hero-sub {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 2rem;
+  color: var(--text-hero);
+  opacity: 0.75;
+  max-width: 500px;
+  position: relative;
+  z-index: 2;
+  animation: slideUp 0.7s ease 0.15s forwards;
+  opacity: 0;
+}
+
+.mood-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.2;
+  background: white;
+  pointer-events: none;
+}
+
+.mood-page-wrapper {
+  background: var(--accent);
+  min-height: 100vh;
+  padding: 4rem 5%;
+  transition: background 0.4s ease;
+}
+
+.mood-section-header {
+  margin-bottom: 2.5rem;
+}
+ 
+.mood-section-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  color: var(--text-hero-alt, #2c1f14);
+  margin-bottom: 0.1rem;
+  border-left: 5px solid var(--primary);
+  padding-left: 1rem;
+}
+ 
+body.theme-dark-twisted .mood-section-header h2,
+body.theme-dark-twisted .mood-book-title,
+body.theme-dark-twisted .mood-club-name {
+  color: #e8d5ff;
+}
+
+body.theme-dark-twisted .book-card{
+  background-color: #2e1a41;
+}
+body.theme-dark-twisted .dbook-card{
+  background-color: #2e1a41;
+}
+body.theme-dark-twisted .btn-readmore{
+   background-color: #21033d;
+    color: #e8d5ff;
+}
+body.theme-dark-twisted .btn-readmore:hover {
+    background-color: #7e22ce;
+}
+body.theme-dark-twisted .btn-save{
+   background-color: #21033d;
+    color: #e8d5ff;
+}
+body.theme-dark-twisted .btn-save:hover {
+    background-color: #a855f7;
+    color: #e8d5ff;
+}
+body.theme-dark-twisted #Prev {
+    background-color: #a855f7;
+    color: #e8d5ff;
+}
+body.theme-dark-twisted #Next {
+    background-color: #a855f7;
+    color: #e8d5ff;
+}
+body.theme-dark-twisted #Next {
+    background-color: #a855f7;
+    color: #e8d5ff;
+}
+body.theme-make-me-cry #moodTagline ,#moodSub , .mood-back-btn{
+  color:#f8f8f8;
+}
+
+
+body.theme-dark-twisted .mood-section-header h2,
+body.theme-dark-twisted .mood-book-title,
+body.theme-dark-twisted .mood-club-name {
+  color: #e8d5ff;
+}
+ 
+body.theme-dark-twisted .mood-section-header p,
+body.theme-dark-twisted .mood-book-author,
+body.theme-dark-twisted .mood-club-desc {
+  color: rgba(232, 213, 255, 0.6);
+}
+ 
+.mood-section-header p {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 1.9rem;
+  color: rgba(23, 16, 10, 0.6);
+  padding-left: 1.3rem;
+}
+ 
+ 
+
+ 
+.mood-books-section { margin-bottom: 5rem; }
+ 
+.mood-books-grid  {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 4fr));
+  gap: 2rem;
+}
+ 
+.mood-book-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+}
+ 
+.mood-book-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.14);
+}
+ 
+.mood-book-cover {
+  width: 100%;
+  height: 260px;
+  display: block;
+}
+ 
+.mood-book-info { padding: 1rem 1.1rem 1.2rem; }
+ 
+.mood-book-tag {
+  display: inline-block;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 0.25rem 0.7rem;
+  border-radius: 20px;
+  margin-bottom: 0.5rem;
+  font-family: 'Source Sans 3', sans-serif;
+  text-transform: uppercase;
+}
+ 
+.mood-book-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: #2c1f14;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  line-height: 1.3;
+}
+ 
+.mood-book-author {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(44,31,20,0.6);
+  margin-bottom: 0.8rem;
+}
+ 
+.mood-book-btn {
+  width: 100%;
+  background: var(--primary);
+  color: var(--text-hero);
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+ 
+.mood-book-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+ 
+ 
+ 
+.mood-clubs-section { padding-bottom: 3rem; }
+ 
+.mood-clubs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.8rem;
+}
+ 
+.mood-club-card {
+  background: var(--card-bg);
+  border-radius: 18px;
+  padding: 1.8rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+  border-top: 4px solid var(--primary);
+}
+ 
+.mood-club-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+}
+ 
+.mood-club-emoji {
+  font-size: 2.5rem;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+ 
+.mood-club-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: #2c1f14;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+ 
+.mood-club-desc {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.9rem;
+  color: rgba(44,31,20,0.6);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+ 
+.mood-club-members {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.82rem;
+  color: var(--primary-dark);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+ 
+.mood-club-btn {
+  background: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary-dark);
+  border-radius: 20px;
+  padding: 0.5rem 1.3rem;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+ 
+.mood-club-btn:hover {
+  background: var(--primary);
+  color: var(--text-hero);
+}
+ 
+ 
+/* 
+   ANIMATIONS
+   */
+ 
+@keyframes float {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-12px); }
+  100% { transform: translateY(0px); }
+}
+ 
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+ 
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+ 
+ 
+/*
+   RESPONSIVE
+ */
+ 
+@media (max-width: 768px) {
+  .mood-hero { min-height: 60vh; padding: 5rem 1.5rem 3rem; }
+  .mood-hero-emoji { font-size: 3.5rem; }
+  .mood-books-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1.2rem; }
+  .mood-book-cover { height: 200px; }
+  .mood-clubs-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .dbook-card {
+    flex: 0 0 150px;
+  }
+}
+ 
+
+
+
+
+
+
+
+
+
+
+
+

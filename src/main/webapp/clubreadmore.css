@@ -1,0 +1,341 @@
+
+
+body {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.6)), url("Img/BackgroundPic.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.instrument-serif-regular {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Navigation bar */
+nav {
+    background-color: #41311dd2;
+    font-size: 1.25rem;
+    font-weight: bold;
+    border-bottom: #2F1B12 solid 3px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.76);
+}
+
+.navbar {
+    position: sticky;
+    top: 0px;
+    z-index: 2;
+}
+
+.nav-link:hover {
+    text-decoration: underline solid white 2px;
+    transform: scale(1.01);
+
+}
+
+.navbar-nav {
+    gap: 4rem;
+}
+
+.title {
+    font-size: 2.5rem;
+    text-decoration: none;
+    margin-left: 1%;
+}
+
+.btn {
+    -webkit-border-radius: 60;
+    -moz-border-radius: 60;
+    border-radius: 60px;
+    text-shadow: 1px 1px 30px #000000;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 20px;
+    background: 785b37d2;
+    padding: 10px 20px 10px 20px;
+    border: solid #000000 2px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    color: white;
+    background: #3E2C23;
+    background-image: -webkit-linear-gradient(top, #3E2C23, #4e3b23d2);
+    background-image: -moz-linear-gradient(top, #3E2C23, #4e3b23d2);
+    background-image: -ms-linear-gradient(top, #3E2C23, #4e3b23d2);
+    background-image: -o-linear-gradient(top, #3E2C23, #4e3b23d2);
+    background-image: linear-gradient(to bottom, #3E2C23, #4e3b23d2);
+    text-decoration: none;
+}
+
+.fa {
+    font-size: 4rem;
+    margin-left: 1%;
+}
+
+.club-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap:0.5rem;
+    margin: 1.2rem 2rem;
+    color:#5a3e2b;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 1.5rem;
+    opacity: 0.8;
+    transition: opacity 0.2s ;
+}
+ 
+.club-back-btn:hover {
+    opacity: 1;
+    color: #2c1f14;
+}   
+
+.club-page {
+    display:flex;
+    min-height: 85vh;
+    padding: 2rem 4%;
+    gap:0.5rem;
+    align-items: center;
+}
+
+
+.club-img{
+    width:100%;
+    max-width: 480px;
+    height:520px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+
+}
+.club-info {
+    flex: 2;
+    display: flex;
+    flex-direction: column;    
+    gap: 1rem;
+}
+
+.club-thumbnail{
+    flex:1;
+    display:flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 3rem;
+}
+
+.club-title{
+    font-family: 'Playfair Display', serif;
+    font-size: 6rem; 
+    color: #2c1f14;
+    line-height: 1.1;
+    margin: 0;
+}
+
+.club-sub{
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 3rem;
+    color: #5a3e2b;
+    font-weight: 600;
+    margin: 0;
+    opacity: 0.85;
+}
+.club-divider {
+    border: none;
+    border-top: 4px solid rgba(0, 0, 0, 0.15);
+    margin: 0.5rem 0;
+}
+.club-summary {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1.6rem;
+    color:#2c1f14 ;
+    line-height: 1.7;
+    margin: 1;
+}
+
+.about-club {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #2c1f14;
+    margin: 0;
+}
+ 
+
+.club-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+}
+ 
+.club-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1.7rem;
+    color: #3b2917;
+    font-weight: bold;
+}
+/* join btn */
+.club-join-btn{
+     margin-top: 1rem;
+    background: #5a3e2b;
+    color: #f5efe6;
+    border: none;
+    border-radius: 30px;
+    padding: 0.9rem 2.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    cursor: pointer;
+    width: fit-content;          
+    transition: background 0.2s, transform 0.15s;
+}
+.club-join-btn:hover {
+    background: #2c1f14;
+    /* transform: translateY(-2px); */
+}
+.club-join-btn.joined {
+    background: #2d6b4a;          /* green when joined */
+    cursor: default;
+}
+ 
+/* Dark overlay behind the modal */
+.modal-overlay {
+    position: fixed;              /* stays in place even when scrolling */
+    inset: 0;                     /* covers the whole screen (top/right/bottom/left = 0) */
+    background: rgba(20, 12, 6, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    opacity: 0;                   /* invisible by default */
+    pointer-events: none;         /* can't click through it when hidden */
+    transition: opacity 0.3s ease;
+}
+ 
+/* When JS adds .active class, it becomes visible */
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+ 
+/* The white box in the centre */
+.modal-box {
+    background: #fdf6ec;
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+    /* slides up when it appears */
+    transform: translateY(30px);
+    transition: transform 0.3s ease;
+}
+ 
+.modal-overlay.active .modal-box {
+    transform: translateY(0);     /* slides into place */
+}
+ 
+.modal-emoji {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+ 
+.modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #2c1f14;
+    margin-bottom: 0.5rem;
+}
+ 
+.modal-message {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1.4rem;
+    color: rgba(44, 31, 20, 0.75);
+    margin-bottom: 0.5rem;
+}
+
+.modal-member-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    color: #5a3e2b;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+ 
+.close-btn {
+    background: #5a3e2b;
+    color: #f5efe6;
+    border: none;
+    border-radius: 25px;
+    padding: 0.75rem 2rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+ 
+.modal-close-btn:hover {
+    background: #2c1f14;
+}
+
+@media (max-width: 992px) {
+    .book-page {
+        flex-direction: column;   
+        align-items: center;      
+        text-align: center;
+    }
+
+    .book-thumbnail {
+        align-items: center;
+    }
+
+    .book-info {
+        align-items: center;
+    }
+
+    .book-title {
+        font-size: 3rem;  
+    }
+
+    .book-sub {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .book-title {
+        font-size: 2.2rem;
+    }
+
+    .book-sub {
+        font-size: 1.4rem;
+    }
+
+    .book-summary {
+        font-size: 1.1rem;
+    }
+
+    .book-img {
+        max-width: 250px;
+    }
+
+    .book-meta {
+        flex-direction: column; /* stack meta items */
+        gap: 1rem;
+    }
+    .review-card {
+        padding: 1rem;
+        border-radius: 15px;
+    }
+
+    .review-card p {
+        font-size: 1rem;
+    }
+}
+
+ 

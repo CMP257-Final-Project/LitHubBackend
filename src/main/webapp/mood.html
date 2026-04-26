@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="mood.css">
+    <link rel="stylesheet" href="findabookstyle.css">
+
+</head>
+
+<body class="quintessential-regular">
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <i class="fa fa-book-open" aria-hidden="true"></i>
+            <a class="text-white title" href="#">Lit Hub</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link active text-white" href="HomePage.html">ABOUT</a>
+                    <a class="nav-link active text-white" href="findabook.html">FIND A BOOK</a>
+                    <a class="nav-link active text-white" href="bloghomepage.html">BLOGS</a>
+                    <a class="nav-link active text-white" href="Loginpage.html">SIGN IN</a>
+                    <button class="btn" type="button" onclick="window.location.href='Signuppage.html'">SIGN UP</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero section -->
+    <!-- this section is for back button and the floating emojis -->
+    <section class="mood-hero" id="moodHero">
+        <a href="findabook.html" class="mood-back-btn">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+
+        <div class="mood-hero-emoji" id="moodEmoji">😊</div>
+        <h1 class="mood-hero-tagline" id="moodTagline">Loading...</h1>
+            <p class="mood-hero-sub" id="moodSub">Please Wait</p>
+
+            <!-- this is the floating emojis -->
+            <div class="mood-blob blob1"></div>
+            <div class="mood-blob blob2"></div>
+            <div class="mood-blob blob3"></div>
+
+    </section>
+
+    <!-- this is for all the mood pages ig -->
+    <div class="mood-page-wrapper" id="moodPageWrapper">
+
+        <section class="mood-books-section">
+
+            <div class="mood-section-header">
+                <h2 id="booksSectionTitle">Loading...</h2>
+                <p id="booksSectionSub">Handpicked to match your vibe</p>
+            </div>
+
+            <section class="Most-Viewed">
+
+                <div class="mv-grid">
+                    <button class="arrow-btn" id="Prev">&#8249;</button>
+
+                    <div class="mv-overflow">
+                        <div class="mv-track" id="mvTrack">
+
+                            <div class="book-card">
+                                <img id="book1" src="" alt="book1">
+                                <div class="tn-button">
+                                    <button class="btn-readmore">Read More</button>
+                                    <button class="btn-save"><i class="far fa-bookmark"></i> Save</button>
+                                </div>
+                            </div>
+
+                            <div class="book-card">
+                                <img id="book2" src="" alt="book2">
+                                <div class="tn-button">
+                                    <button class="btn-readmore">Read More</button>
+                                    <button class="btn-save"><i class="far fa-bookmark"></i> Save</button>
+                                </div>
+                            </div>
+
+                            <div class="book-card">
+                                <img id="book3" src="" alt="book3">
+                                <div class="tn-button">
+                                    <button class="btn-readmore">Read More</button>
+                                    <button class="btn-save"><i class="far fa-bookmark"></i> Save</button>
+                                </div>
+                            </div>
+
+                            <div class="book-card">
+                                <img id="book4" src="" alt="book4">
+                                <div class="tn-button">
+                                    <button class="btn-readmore">Read More</button>
+                                    <button class="btn-save"><i class="far fa-bookmark"></i> Save</button>
+                                </div>
+                            </div>
+
+                            <div class="book-card">
+                                <img id="book5" src="" alt="book5">
+                                <div class="tn-button">
+                                    <button class="btn-readmore">Read More</button>
+                                    <button class="btn-save"><i class="far fa-bookmark"></i> Save</button>
+                                </div>
+                            </div>
+
+
+                            <div class="book-card ">
+                                <img id="book6" src="" alt="book6">
+                                <div class="tn-button">
+                                    <button class="btn-readmore">Read More</button>
+                                    <button class="btn-save"><i class="far fa-bookmark"></i> Save</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="arrow-btn" id="Next">&#8250;</button>
+
+                </div>
+
+
+            </section>
+        </section>
+
+        <!-- FEEL GOOD BOOK CLUBS -->
+        <!-- CLUBS (STATIC for now) -->
+        <section class="Most-Viewed">
+            <div class="mood-section-header">
+                <h2 id="BookClubsTitle">Book Clubs</h2>
+                <p id="BookClubsSub">Find your reading community</p>
+            </div>
+
+
+            <div class="mv-overflow">
+
+                <div class="mv-track">
+
+                    <div class="dbook-card">
+                        <img id="c1" src="" alt="c1">
+                        <div class="tn-button">
+                                    <button class="btn-readmore">Read More</button>
+                                    <button class="btn-save"><i class="far fa-bookmark"></i> Save</button>
+                         </div>
+                    </div>
+
+                    <div class="dbook-card">
+                        <img id="c2" src="" alt="c2">
+                         <div class="tn-button">
+                                    <button class="btn-readmore">Read More</button>
+                                    <button class="btn-save"><i class="far fa-bookmark"></i> Save</button>
+                         </div>
+                    </div>
+
+                    <div class="dbook-card">
+                        <img id="c3" src="" alt="c3">
+                         <div class="tn-button">
+                                    <button class="btn-readmore">Read More</button>
+                                    <button class="btn-save"><i class="far fa-bookmark"></i> Save</button>
+                         </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>  
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="findabook.js"></script>
+    <script src="mood.js"></script>
+
+
+</body>
+
+</html>

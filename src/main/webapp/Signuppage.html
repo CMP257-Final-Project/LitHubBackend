@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quintessential&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="Signuplogin.css">
+    <style>
+        .signup-row {
+            align-items: center !important;
+        }
+
+        .signup-card {
+            height: auto !important;
+        }
+
+        .signup-image-card {
+            height: 100%;
+        }
+
+        .error-message {
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+
+<body class="instrument-serif-regular">
+    <nav class="navbar navbar-expand-lg ">
+        <div class="container-fluid">
+            <i class="fa fa-book-open" aria-hidden="true"></i>
+            <a class="text-white title" href="#">Lit Hub</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link active text-white" aria-current="page" href="HomePage.html">ABOUT</a>
+                    <a class="nav-link active text-white" aria-current="page" href="findabook.html">FIND A BOOK</a>
+                    <a class="nav-link active text-white" aria-current="page" href="bloghomepage.html">BLOGS</a>
+                    <a class="nav-link active text-white" aria-current="page" href="Loginpage.html">SIGN IN</a>
+                </div>
+            </div>
+        </div>
+    </nav><br>
+
+    <div class="container" style="max-width: 1050px;">
+        <div class="row g-4 align-items-stretch signup-row">
+            <div class="col-md-6 d-flex">
+                <div class="card signup-card w-100">
+                    <div class="card-header">
+                        <h4>Sign Up</h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="signupForm">
+                            <div class="mb-3">
+                                <label for="inputName" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="inputName"
+                                    placeholder="Enter your full name">
+                                <div id="nameError" class="error-message text-danger"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="inputEmailUser" class="form-label">Email or Username</label>
+                                <input type="text" class="form-control" id="inputEmailUser"
+                                    placeholder="Enter email or username">
+                                <div id="emailError" class="error-message text-danger"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="inputPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="inputPassword"
+                                    placeholder="Enter password">
+                                <div id="passwordError" class="error-message text-danger"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="dateofbirth" class="form-label">Date of Birth</label>
+                                <input type="date" class="form-control" id="date">
+                                <div id="dateError" class="error-message text-danger"></div>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 d-flex">
+                <div class="card h-100 overflow-hidden border-0 shadow-sm signup-image-card w-100">
+                    <img src="https://i.pinimg.com/1200x/e2/15/19/e21519f1743c90808b53e62d6c571a75.jpg"
+                        alt="Literary inspiration" class="img-fluid h-100 w-100 object-fit-cover"
+                        style="object-fit: cover; min-height: 100%;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function validateName(name) {
+            if (name.trim() === "") {
+                return "Name is required";
+            }
+            if (name.length < 2) {
+                return "Name is too short";
+            }
+            if (!/^[A-Za-z\s]+$/.test(name)) {
+                return "Name can only contain letters and spaces";
+            }
+            return "";
+        }
+
+        function validateEmailOrUsername(value) {
+            if (value.trim() === "") {
+                return "Email or Username is required";
+            }
+
+            if (value.includes("@")) {
+                const emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+                if (!emailRegex.test(value)) {
+                    return "Enter a valid email address";
+                }
+            } else {
+                if (value.length < 5) {
+                    return "Username must be at least 5 characters";
+                }
+                if (!/^[A-Za-z0-9_]+$/.test(value)) {
+                    return "Username can only contain letters, numbers, and underscore";
+                }
+            }
+            return "";
+        }
+
+
+        function validatePassword(password) {
+            if (password === "") {
+                return "Password is required";
+            }
+            if (password.length < 6 || (!/\d/.test(password)) || !/[A-Z]/.test(password)) {
+                return "Password must be at least 6 characters, contain at least one number, and one uppercase letter";
+            }
+
+            return "";
+        }
+
+        function validateDate(date) {
+            if (date === "") {
+                return "Date of Birth is required";
+            }
+            const birthDate = new Date(date);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            if (age < 13) {
+                return "You must be at least 13 years old";
+            }
+            if (age > 120) {
+                return "Please enter a valid date of birth";
+            }
+            return "";
+        }
+
+        const nameInput = document.getElementById("inputName");
+        const emailInput = document.getElementById("inputEmailUser");
+        const passwordInput = document.getElementById("inputPassword");
+        const dateInput = document.getElementById("date");
+
+        nameInput.addEventListener("input", function () {
+            const error = validateName(this.value);
+            document.getElementById("nameError").textContent = error;
+            if (error) {
+                this.classList.add("is-invalid");
+                this.classList.remove("is-valid");
+            } else {
+                this.classList.add("is-valid");
+                this.classList.remove("is-invalid");
+            }
+        });
+
+        emailInput.addEventListener("input", function () {
+            const error = validateEmailOrUsername(this.value);
+            document.getElementById("emailError").textContent = error;
+            if (error) {
+                this.classList.add("is-invalid");
+                this.classList.remove("is-valid");
+            } else {
+                this.classList.add("is-valid");
+                this.classList.remove("is-invalid");
+            }
+        });
+
+        passwordInput.addEventListener("input", function () {
+            const error = validatePassword(this.value);
+            document.getElementById("passwordError").textContent = error;
+            if (error) {
+                this.classList.add("is-invalid");
+                this.classList.remove("is-valid");
+            } else {
+                this.classList.add("is-valid");
+                this.classList.remove("is-invalid");
+            }
+        });
+
+        dateInput.addEventListener("input", function () {
+            const error = validateDate(this.value);
+            document.getElementById("dateError").textContent = error;
+            if (error) {
+                this.classList.add("is-invalid");
+                this.classList.remove("is-valid");
+            } else {
+                this.classList.add("is-valid");
+                this.classList.remove("is-invalid");
+            }
+        });
+
+
+        document.getElementById("signupForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const name = nameInput.value;
+            const emailUsername = emailInput.value;
+            const password = passwordInput.value;
+            const date = dateInput.value;
+
+            const nameError = validateName(name);
+            const emailError = validateEmailOrUsername(emailUsername);
+            const passwordError = validatePassword(password);
+            const dateError = validateDate(date);
+
+            document.getElementById("nameError").textContent = nameError;
+            document.getElementById("emailError").textContent = emailError;
+            document.getElementById("passwordError").textContent = passwordError;
+            document.getElementById("dateError").textContent = dateError;
+
+            if (!nameError && !emailError && !passwordError && !dateError) {
+                alert("Sign up successful! Welcome to Lit Hub!");
+                window.location.href = "Dashboard.html";
+                this.reset();
+                document.querySelectorAll(".form-control").forEach(input => {
+                    input.classList.remove("is-valid", "is-invalid");
+                });
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

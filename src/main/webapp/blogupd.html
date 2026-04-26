@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quintessential&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="BlogStyle.css">
+    <!-- TRIAL FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg ">
+        <div class="container-fluid">
+            <i class="fa fa-book-open" style="color: #D3968c; font-size: 3.5rem;"></i>
+            <a class="text-white title" href="#">Lit Hub</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link active text-white" aria-current="page" href="HomePage.html">ABOUT</a>
+                    <a class="nav-link active text-white" aria-current="page" href="findabook.html">FIND A BOOK</a>
+                    <a class="nav-link active text-white" aria-current="page" href="bloghomepage.html">BLOGS</a>
+                    <a class="nav-link active text-white" aria-current="page" href="Loginpage.html">SIGN IN</a>
+                    <button class="btn " type="button" onclick="window.location.href='Signuppage.html'">SIGN UP</button>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="blog-section">
+        <div class="blogintro">
+            <h1>Read any new books?</h1>
+            <h1>Tell us all about it!</h1>
+        </div>
+        
+        <form class="blogform" action="blog.html" method="post">
+            <label for="name">Book Title</label>
+            <input type="text" id="name" name="book" placeholder="Title of Book">
+
+            <label for="rate">Rating</label>
+            <input type="range" id="rating" min="0" max="5" value="0">
+            <p id="stars"></p>
+
+            <label for="blog">Blog Away!</label>
+            <textarea class="blog" id="blog" placeholder="Write your review here..." maxlength="10000"></textarea>
+            
+            <div class="char-count">
+                <span id="count">0</span>/10000
+            </div>
+
+            <button class="submit" type="submit" id="submit">Submit Review</button>
+            <button type="button" class="submit" onclick="window.location.href='bloghomepage.html'">Go Back</button>
+        
+        </form>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class=" col-12 col-sm-4">
+                    <h3 class="footer-title">Community</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Articles</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-sm-4">
+                    <h3 class="footer-title">Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About / Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-12 col-sm-4">
+                    <h3 class="footer-title">Follow</h3>
+                    <p class="footer-links">
+                        <a href="#"><i class="fab fa-facebook"></i> Facebook</a>&ensp;&ensp;&ensp;&ensp;&ensp;
+                        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>&ensp;&ensp;&ensp;&ensp;&ensp;
+                        <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                    </p>
+                </div>
+            </div>
+            <div class="row footer-bottom ">
+                <div class="col-12 text-center">
+                    <small style="color: white;">&copy; 2026 Lit Hub LLC. All Rights Reserved.</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="blog.js"></script>
+</body>
+
+</html>

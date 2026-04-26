@@ -1,0 +1,287 @@
+body {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.6)), url("Img/BackgroundPic.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.instrument-serif-regular {
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Navigation bar */
+nav {
+    background-color: #41311dd2;
+    font-size: 1.25rem;
+    font-weight: bold;
+    border-bottom: #2F1B12 solid 3px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.76);
+}
+
+.navbar {
+    position: sticky;
+    top: 0px;
+    z-index: 2;
+}
+
+.nav-link:hover {
+    text-decoration: underline solid white 2px;
+    transform: scale(1.01);
+
+}
+
+.navbar-nav {
+    gap: 4rem;
+}
+
+.title {
+    font-size: 2.5rem;
+    text-decoration: none;
+    margin-left: 1%;
+}
+
+.btn {
+    -webkit-border-radius: 60;
+    -moz-border-radius: 60;
+    border-radius: 60px;
+    text-shadow: 1px 1px 30px #000000;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 20px;
+    background: 785b37d2;
+    padding: 10px 20px 10px 20px;
+    border: solid #000000 2px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    color: white;
+    background: #3E2C23;
+    background-image: -webkit-linear-gradient(top, #3E2C23, #4e3b23d2);
+    background-image: -moz-linear-gradient(top, #3E2C23, #4e3b23d2);
+    background-image: -ms-linear-gradient(top, #3E2C23, #4e3b23d2);
+    background-image: -o-linear-gradient(top, #3E2C23, #4e3b23d2);
+    background-image: linear-gradient(to bottom, #3E2C23, #4e3b23d2);
+    text-decoration: none;
+}
+
+.fa {
+    font-size: 4rem;
+    margin-left: 1%;
+}
+
+.book-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1.2rem 2rem;
+    color: #5a3e2b;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 1.5rem;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.book-back-btn:hover {
+    opacity: 1;
+    color: #2c1f14;
+}
+
+.book-page {
+    display: flex;
+    min-height: 85vh;
+    padding: 2rem 4%;
+    gap: 0.5rem;
+    align-items: flex-start;
+}
+
+
+.book-img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+
+}
+
+.btn-save {
+    background: #714423;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 70%;
+}
+
+.btn-save:hover {
+    background: #5a351c;
+    transform: translateY(-2px);
+}
+
+.book-info {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    /* stacks everything vertically */
+    gap: 1rem;
+}
+
+.book-thumbnail {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 3rem;
+}
+
+.book-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    /* scales with screen size */
+    color: #2c1f14;
+    line-height: 1.1;
+    margin: 0;
+}
+
+.book-sub {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 2rem;
+    color: #5a3e2b;
+    font-weight: 600;
+    margin: 0;
+    opacity: 0.85;
+}
+
+.star-rating {
+    color: #dabd4c;
+    font-size: 1.4rem;
+}
+
+
+.book-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+    padding: 1rem 0;
+    border-top: 2px solid #DEAF84;
+    border-bottom: 2px solid #DEAF84;
+}
+
+.book-meta-item {
+    text-align: center;
+}
+
+.book-meta-item i {
+    color: #6d462c;
+    font-size: 1.5rem;
+}
+
+
+.book-summary {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1.rem;
+    color: rgba(44, 31, 20, 0.75);
+    line-height: 1.7;
+    margin: 1;
+}
+
+.about-book {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #2c1f14;
+    margin: 0;
+}
+
+.reviews-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid #DEAF84;
+}
+
+.review-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 1.2rem 1.5rem;
+    border-radius: 20px;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #DEAF84;
+    transition: all 0.3s ease;
+}
+
+.review-card p {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1.1rem;
+    color: #2c1f14;
+    line-height: 1.6;
+    margin: 0.5rem 0;
+}
+
+.review-author {
+    font-weight: bold;
+    color: #5a3e2b;
+    margin-bottom: 0.3rem;
+}
+
+@media (max-width: 992px) {
+    .book-page {
+        flex-direction: column;   
+        align-items: center;      
+        text-align: center;
+    }
+
+    .book-thumbnail {
+        align-items: center;
+    }
+
+    .book-info {
+        align-items: center;
+    }
+
+    .book-title {
+        font-size: 3rem;  
+    }
+
+    .book-sub {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .book-title {
+        font-size: 2.2rem;
+    }
+
+    .book-sub {
+        font-size: 1.4rem;
+    }
+
+    .book-summary {
+        font-size: 1.1rem;
+    }
+
+    .book-img {
+        max-width: 250px;
+    }
+
+    .book-meta {
+        flex-direction: column; /* stack meta items */
+        gap: 1rem;
+    }
+    .review-card {
+        padding: 1rem;
+        border-radius: 15px;
+    }
+
+    .review-card p {
+        font-size: 1rem;
+    }
+}
