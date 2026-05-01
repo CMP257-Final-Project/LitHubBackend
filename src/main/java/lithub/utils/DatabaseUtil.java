@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseUtil {
-    private static final String URL = "jdbc:mysql://serverless-europe-west4.sysp0000.db2.skysql.com:4000/LitHub_DB?useSSL=true&serverTimezone=UTC";
-    private static final String USERNAME = "dbpgf10219808";
-    private static final String PASSWORD = "j1glt9E5pp=ASHnPUNV52da";  // ADD YOUR PASSWORD HERE BUT REMEMBER TO REMOVE IT BEFORE PUSHING 
+    private static final String URL = "";
+    private static final String USERNAME = "";
+    private static final String PASSWORD = "";  // ADD YOUR PASSWORD HERE BUT REMEMBER TO REMOVE IT BEFORE PUSHING 
     
     static {
         try {
