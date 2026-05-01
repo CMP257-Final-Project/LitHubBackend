@@ -1,107 +1,93 @@
-//------------------------------------------------------ Backend Connected Version ---------------------------------------------------------
-// Data will be fetched from backend - no hardcoded data
+/**
+ * DashboardJS.js
+ * All book data is loaded from the backend via fetch().
+ * No hardcoded books remain here.
+ */
 
-let currentUser = {
-    id: null,
-    name: "",
-    email: "",
-    memberSince: ""
-};
+// ── In-memory state (filled after API response) ────────────────────────────
+var wishlistBooks = [];
+var readBooks     = [];
+var currentUser   = { username: "" };
 
-let wishlistBooks = [];
-let readBooks = [];
+// ── API base path ──────────────────────────────────────────────────────────
+// Adjust the context root if yours differs (e.g. "/LitHub/api/...")
+var API_BASE = "api";
 
-// ---------------------FETCH FUNCTIONS (NEW - Add these)---------------------
+// =============================================================================
+//  INITIALISATION
+// =============================================================================
 
-// Fetch user data from backend
-async function fetchUserData() {
-    try {
-        let response = await fetch('/LitHubBackend/get-user');
-        if (response.ok) {
-            let data = await response.json();
-            currentUser.id
-			 = data.userId;
-            currentUser.name = data.name || data.username;
-            currentUser.email = data.email;
-            document.getElementById('userName').textContent = currentUser.name;
-        } else {
-            document.getElementById('userName').textContent = "Reader";
+document.addEventListener('DOMContentLoaded', function() {
+
+    // Wire up logout button
+    var logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) logoutBtn.addEventListener('click', logout);
+
+    // Load everything from the server
+    loadDashboard();
+});
+
+/**
+ * Fetches GET /api/dashboard and populates the whole page.
+ * Redirects to login if the server returns 401.
+ */
+function loadDashboard() {
+    fetch(API_BASE + "/dashboard", {
+        method: 'GET',
+        credentials: 'same-origin'   // send the session cookie
+    })
+    .then(function(resp) {
+        if (resp.status === 401) {
+            // Not logged in — send back to login page
+            //window.location.href = 'login.html';
+            return;
         }
-    } catch (error) {
-        console.error('Error loading user:', error);
-        document.getElementById('userName').textContent = "Reader";
-    }
-}
 
-// Fetch stats from backend
-async function fetchStats() {
-    try {
-        let response = await fetch('/LitHubBackend/dashboard-data');
-        if (response.ok) {
-            let data = await response.json();
-            document.getElementById('wishlistCount').textContent = data.wishlistCount || 0;
-            document.getElementById('readCount').textContent = data.readCount || 0;
-            document.getElementById('totalPages').textContent = data.totalPages || 0;
-        }
-    } catch (error) {
-        console.error('Error loading stats:', error);
-    }
-}
+        if (!resp.ok) throw new Error("Server error " + resp.status);
+        return resp.json();
+    })
+    .then(function(data) {
+        if (!data) return;
+        
+        // Store in module-level variables so export functions can use them
+        currentUser.username = data.username;
+        wishlistBooks        = data.wishlist  || [];
+        readBooks            = data.readBooks || [];
 
-// Fetch wishlist from backend
-async function fetchWishlist() {
-    try {
-        let response = await fetch('/LitHubBackend/get-wishlist');
-        if (response.ok) {
-            wishlistBooks = await response.json();
-            displayWishlist();
-            updateStats();
-        }
-    } catch (error) {
-        console.error('Error loading wishlist:', error);
-        wishlistBooks = [];
+        // Render
+        document.getElementById('userName').textContent = data.username;
+        updateStats();
         displayWishlist();
-    }
-}
-
-// Fetch read books from backend
-async function fetchReadBooks() {
-    try {
-        let response = await fetch('/LitHubBackend/get-read-books');
-        if (response.ok) {
-            readBooks = await response.json();
-            displayReadBooks();
-            updateStats();
-        }
-    } catch (error) {
-        console.error('Error loading read books:', error);
-        readBooks = [];
         displayReadBooks();
-    }
+    })
+    .catch(function(err) {
+        console.error('Failed to load dashboard:', err);
+        showToast('Could not load your dashboard. Please refresh.');
+    });
 }
 
-// ---------------------DISPLAY FUNCTIONS (Keep your existing code, just remove hardcoded data)---------------------
+// =============================================================================
+//  STATS
+// =============================================================================
 
-// Displays user name - REMOVE the old line that sets it, keep only if element exists
-// (Your existing code at line ~30: document.getElementById('userName').textContent = currentUser.name; 
-//  Will be replaced by fetchUserData)
-
-// Update stats (MODIFIED to use dynamic data instead of hardcoded)
 function updateStats() {
     document.getElementById('wishlistCount').textContent = wishlistBooks.length;
-    document.getElementById('readCount').textContent = readBooks.length;
+    document.getElementById('readCount').textContent     = readBooks.length;
 
-    let totalPagesRead = 0;
-    for (const book of readBooks) {
-        totalPagesRead = totalPagesRead + (book.pages || 0);
+    var totalPages = 0;
+    for (var i = 0; i < readBooks.length; i++) {
+        totalPages += (readBooks[i].pageCount || 0);
     }
-    document.getElementById('totalPages').textContent = totalPagesRead;
+    document.getElementById('totalPages').textContent = totalPages;
 }
 
-// Shows stars (KEEP AS IS)
+// =============================================================================
+//  RENDER HELPERS
+// =============================================================================
+
 function getStarRating(rating) {
-    let stars = '';
-    for (let i = 1; i <= 5; i++) {
+    var stars = '';
+    for (var i = 1; i <= 5; i++) {
         if (i <= rating) {
             stars += '<i class="fas fa-star"></i>';
         } else {
@@ -111,299 +97,335 @@ function getStarRating(rating) {
     return stars;
 }
 
-// Display wishlist books (MODIFIED - works with dynamic data)
+// =============================================================================
+//  DISPLAY FUNCTIONS
+// =============================================================================
+
 function displayWishlist() {
-    const wish = document.getElementById('wishlistGrid');
+    var container = document.getElementById('wishlistGrid');
 
     if (wishlistBooks.length === 0) {
-        wish.innerHTML = `
-                    <div class="empty-grid">
-                        <h3>Your wishlist is empty</h3>
-                        <p>Start adding books from the <a href="findabook.html">Find a Book page</a>!</p>
-                    </div>
-                `;
+        container.innerHTML = '<div class="empty-grid">' +
+            '<i class="fas fa-heart"></i>' +
+            '<h3>Your wishlist is empty</h3>' +
+            '<p>Start adding books from the <a href="findabook.html">Find a Book</a> page!</p>' +
+            '</div>';
         return;
     }
 
-    let html = '';
-    for (const book of wishlistBooks) {
-        html += `
-                    <div class="book-card" data-book-id="${book.id}">
-                        <img src="${book.cover}" alt="${book.title}" class="book-cover">
-                        <div class="book-info">
-                            <h3 class="book-title">${book.title}</h3>
-                            <p class="book-author">by ${book.author}</p>
-                            <p class="book-date">Added: ${book.savedDate}</p>
-                            <div class="book-actions">
-                                <button class="btn-read" onclick="markAsRead('${book.id}')">
-                                    <i class="fas fa-check"></i> Mark as Read
-                                </button>
-                                <button class="btn-remove" onclick="removeFromWishlist('${book.id}')">
-                                    <i class="fas fa-trash"></i> Remove
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-    };
-
-    wish.innerHTML = html;
+    var html = '';
+    for (var i = 0; i < wishlistBooks.length; i++) {
+        var book = wishlistBooks[i];
+        html += '<div class="book-card" data-userbook-id="' + book.userBookId + '">' +
+            '<img src="' + book.coverUrl + '" alt="' + book.title + '" class="book-cover"' +
+            ' onerror="this.src=\'Img/placeholder.jpg\'">' +
+            '<div class="book-info">' +
+            '<h3 class="book-title">' + book.title + '</h3>' +
+            '<p class="book-author">by ' + book.author + '</p>' +
+            '<p class="book-date">Added: ' + (book.addedAt || '—') + '</p>' +
+            '<div class="book-actions">' +
+            '<button class="btn-read" onclick="markAsRead(' + book.userBookId + ', \'' + escapeHtml(book.title) + '\')">' +
+            '<i class="fas fa-check"></i> Mark as Read</button>' +
+            '<button class="btn-remove" onclick="removeFromWishlist(' + book.userBookId + ', \'' + escapeHtml(book.title) + '\')">' +
+            '<i class="fas fa-trash"></i> Remove</button>' +
+            '</div></div></div>';
+    }
+    container.innerHTML = html;
 }
 
-// Display read books (MODIFIED - works with dynamic data)
 function displayReadBooks() {
-    const read = document.getElementById('readGrid');
+    var container = document.getElementById('readGrid');
 
     if (readBooks.length === 0) {
-        read.innerHTML = `
-                    <div class="empty-grid">
-                        <h3>No books marked as read yet</h3>
-                        <p>Mark books as read from your wishlist!</p>
-                    </div>
-                `;
+        container.innerHTML = '<div class="empty-grid">' +
+            '<i class="fas fa-check-circle"></i>' +
+            '<h3>No books marked as read yet</h3>' +
+            '<p>Mark books as read from your wishlist!</p>' +
+            '</div>';
         return;
     }
 
-	let html = '';
-	for (const book of readBooks) {
-	    html += "
-	                <div class="book-card" data-book-id="${book.id}">
-	                    <img src="${book.cover}" alt="${book.title}" class="book-cover">
-	                    <div class="book-info">
-	                        <h3 class="book-title">${book.title}</h3>
-	                        <p class="book-author">by ${book.author}</p>
-	                        <div class="book-rating">${getStarRating(book.rating)}</div>
-	                        <p class="book-date">Read: ${book.dateRead}</p>
-	                        <div class="book-actions">
-	                            <button class="btn-rate" onclick="rateBook('${book.id}')">
-	                                <i class="fas fa-star"></i> Rate
-	                            </button>
-	                            <button class="btn-remove" onclick="removeFromRead('${book.id}')">
-	                                <i class="fas fa-trash"></i> Remove
-	                            </button>
-	                        </div>
-	                    </div>
-	                </div>
-	            ";
-	}
-
-    read.innerHTML = html;
-}
-
-
-// -------------------------------ACTION FUNCTIONS (MODIFIED - call backend APIs)---------------------
-
-// Mark a book as read
-async function markAsRead(bookId) {
-    try {
-        let response = await fetch('/LitHubBackend/mark-as-read', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: 'bookCode=' + bookId
-        });
-        
-        if (response.ok) {
-            await fetchWishlist();
-            await fetchReadBooks();
-            await fetchStats();
-            showToast("Book moved to Already Read!");
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        showToast('Failed to mark as read');
+    var html = '';
+    for (var i = 0; i < readBooks.length; i++) {
+        var book = readBooks[i];
+        html += '<div class="book-card" data-userbook-id="' + book.userBookId + '">' +
+            '<img src="' + book.coverUrl + '" alt="' + book.title + '" class="book-cover"' +
+            ' onerror="this.src=\'Img/placeholder.jpg\'">' +
+            '<div class="book-info">' +
+            '<h3 class="book-title">' + book.title + '</h3>' +
+            '<p class="book-author">by ' + book.author + '</p>' +
+            '<div class="book-rating">' + getStarRating(book.rating) + '</div>' +
+            '<p class="book-date">Read: ' + (book.readDate || '—') + '</p>' +
+            '<div class="book-actions">' +
+            '<button class="btn-rate" onclick="rateBook(' + book.userBookId + ', \'' + escapeHtml(book.title) + '\')">' +
+            '<i class="fas fa-star"></i> Rate</button>' +
+            '<button class="btn-remove" onclick="removeFromRead(' + book.userBookId + ', \'' + escapeHtml(book.title) + '\')">' +
+            '<i class="fas fa-trash"></i> Remove</button>' +
+            '</div></div></div>';
     }
+    container.innerHTML = html;
 }
 
-// Remove from wishlist
-async function removeFromWishlist(bookId) {
-    try {
-        let response = await fetch('/LitHubBackend/remove-from-wishlist?bookCode=' + bookId, {
-            method: 'DELETE'
-        });
-        
-        if (response.ok) {
-            await fetchWishlist();
-            await fetchStats();
-            showToast("Removed from wishlist");
+// =============================================================================
+//  ACTION FUNCTIONS  (each calls the backend, then refreshes local state)
+// =============================================================================
+
+/**
+ * Sends an action to POST /api/book-action and returns the parsed JSON.
+ * Throws on network error or non-OK HTTP status.
+ */
+function sendAction(payload, callback) {
+    fetch(API_BASE + "/book-action", {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    })
+    .then(function(resp) {
+        return resp.json();
+    })
+    .then(function(data) {
+        if (!data.success) throw new Error(data.error || 'Action failed');
+        if (callback) callback(null, data);
+    })
+    .catch(function(err) {
+        if (callback) callback(err, null);
+    });
+}
+
+// ── Mark wishlist book as read ──────────────────────────────────────────────
+function markAsRead(userBookId, title) {
+    sendAction({ action: 'markRead', userBookId: userBookId }, function(err, data) {
+        if (err) {
+            showToast('Error: ' + err.message);
+            return;
         }
-    } catch (error) {
-        console.error('Error:', error);
-        showToast('Failed to remove');
-    }
-}
 
-// Remove from read list
-async function removeFromRead(bookId) {
-    try {
-        let response = await fetch('/LitHubBackend/remove-from-read?bookCode=' + bookId, {
-            method: 'DELETE'
-        });
-        
-        if (response.ok) {
-            await fetchReadBooks();
-            await fetchStats();
-            showToast("Removed from reading list");
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        showToast('Failed to remove');
-    }
-}
-
-// Rate the book (MODIFIED - sends to backend)
-async function rateBook(bookId) {
-    const book = readBooks.find(b => b.id === bookId);
-    if (!book) return;
-    
-    const rating = prompt("Rate "+ book.title +"(1 to 5 stars):");
-
-    if (rating && rating >= 1 && rating <= 5) {
-        try {
-            let response = await fetch('/LitHubBackend/rate-book', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: 'bookCode=' + bookId + '&rating=' + rating
-            });
-            
-            if (response.ok) {
-                await fetchReadBooks();
-                showToast("Rated"+book.title+" " +rating+ " stars!");
+        // Move locally without another round-trip
+        var idx = -1;
+        for (var i = 0; i < wishlistBooks.length; i++) {
+            if (wishlistBooks[i].userBookId === userBookId) {
+                idx = i;
+                break;
             }
-        } catch (error) {
-            console.error('Error:', error);
-            showToast('Failed to save rating');
         }
-    } else if (rating) {
-        showToast('Please enter a rating between 1 and 5');
-    }
+        
+        if (idx !== -1) {
+            // Create a copy of the book (no spread operator)
+            var book = {};
+            for (var key in wishlistBooks[idx]) {
+                if (wishlistBooks[idx].hasOwnProperty(key)) {
+                    book[key] = wishlistBooks[idx][key];
+                }
+            }
+            book.status   = 'read';
+			book.readDate = new Date().toISOString().split('T')[0];
+			            book.rating = 0;
+			            delete book.addedAt;
+            
+            // Insert at beginning
+            readBooks.splice(0, 0, book);
+            // Remove from wishlist
+            wishlistBooks.splice(idx, 1);
+        }
+
+        displayWishlist();
+        displayReadBooks();
+        updateStats();
+        showToast('"' + title + '" moved to Already Read!');
+    });
 }
 
+// ── Remove from wishlist ────────────────────────────────────────────────────
+function removeFromWishlist(userBookId, title) {
+    sendAction({ action: 'removeWishlist', userBookId: userBookId }, function(err, data) {
+        if (err) {
+            showToast('Error: ' + err.message);
+            return;
+        }
 
-// ------------------------EXPORT FUNCTIONS (KEEP YOUR EXISTING CODE - no changes needed)---------------------
+        var newWishlist = [];
+        for (var i = 0; i < wishlistBooks.length; i++) {
+            if (wishlistBooks[i].userBookId !== userBookId) {
+                newWishlist.push(wishlistBooks[i]);
+            }
+        }
+        wishlistBooks = newWishlist;
+        
+        displayWishlist();
+        updateStats();
+        showToast('"' + title + '" removed from wishlist');
+    });
+}
 
-// Export as TXT
+// ── Remove from read list ───────────────────────────────────────────────────
+function removeFromRead(userBookId, title) {
+    sendAction({ action: 'removeRead', userBookId: userBookId }, function(err, data) {
+        if (err) {
+            showToast('Error: ' + err.message);
+            return;
+        }
+
+        var newReadBooks = [];
+        for (var i = 0; i < readBooks.length; i++) {
+            if (readBooks[i].userBookId !== userBookId) {
+                newReadBooks.push(readBooks[i]);
+            }
+        }
+        readBooks = newReadBooks;
+        
+        displayReadBooks();
+        updateStats();
+        showToast('"' + title + '" removed from reading list');
+    });
+}
+
+// ── Rate a book ─────────────────────────────────────────────────────────────
+function rateBook(userBookId, title) {
+    var input = prompt('Rate "' + title + '" (1 to 5 stars):');
+    if (input === null) return;          // user cancelled
+
+    var rating = parseInt(input, 10);
+    if (isNaN(rating) || rating < 1 || rating > 5) {
+        showToast('Please enter a number between 1 and 5');
+        return;
+    }
+
+    sendAction({ action: 'rate', userBookId: userBookId, rating: rating }, function(err, data) {
+        if (err) {
+            showToast('Error: ' + err.message);
+            return;
+        }
+
+        // Update locally
+        for (var i = 0; i < readBooks.length; i++) {
+            if (readBooks[i].userBookId === userBookId) {
+                readBooks[i].rating = rating;
+                break;
+            }
+        }
+
+        displayReadBooks();
+        var starText = rating > 1 ? 's' : '';
+        showToast('Rated "' + title + '" ' + rating + ' star' + starText + '!');
+    });
+}
+
+// =============================================================================
+//  EXPORT FUNCTIONS
+// =============================================================================
+
 function exportAsTXT() {
-    let content = "LIT HUB READING LISTS\n";
+    var content  = "LIT HUB READING LISTS\n";
     content += "=====================\n\n";
-	content += "User: " + currentUser.name + " (" + currentUser.email + ")\n";
-	content += "Generated on " + new Date().toLocaleString() + "\n\n";
-	content += "Stats: " + wishlistBooks.length + " in wishlist, " + readBooks.length + " read, " + readBooks.reduce((t, b) => t + (b.pages || 0), 0) + " pages total\n-----\n\n";
-    content += "WISHLIST\n";
-    content += "--------\n";
+    content += "User: " + currentUser.username + "\n";
+    content += "Generated on: " + new Date().toLocaleString() + "\n\n";
+    
+    var totalPages = 0;
+    for (var i = 0; i < readBooks.length; i++) {
+        totalPages += (readBooks[i].pageCount || 0);
+    }
+    
+    content += "Stats: " + wishlistBooks.length + " in wishlist, " + readBooks.length + " read, ";
+    content += totalPages + " pages total\n-----\n\n";
+
+    content += "WISHLIST\n--------\n";
     if (wishlistBooks.length === 0) {
         content += "Empty\n";
     } else {
-        for (let i = 0; i < wishlistBooks.length; i++) {
-            const book = wishlistBooks[i];
-            content += (i + 1) + ". " + book.title + " by " + book.author + " (Added: " + book.savedDate + ")\n";
+        for (var i = 0; i < wishlistBooks.length; i++) {
+            var b = wishlistBooks[i];
+            content += (i + 1) + ". " + b.title + " by " + b.author + " (Added: " + (b.addedAt || '—') + ")\n";
         }
     }
 
-    content += "\nALREADY READ\n";
-    content += "------------\n";
+    content += "\nALREADY READ\n------------\n";
     if (readBooks.length === 0) {
         content += "Empty\n";
     } else {
-        for (let i = 0; i < readBooks.length; i++) {
-            const book = readBooks[i];
-            const rating = book.rating ? book.rating + "⭐" : 'Not rated';
-				content += (i + 1) + ". " + book.title + " by " + book.author + " (Added: " + book.savedDate + ")\n";      
-			  }
+        for (var i = 0; i < readBooks.length; i++) {
+            var b = readBooks[i];
+            var stars = b.rating ? b.rating + "⭐" : 'Not rated';
+            content += (i + 1) + ". " + b.title + " by " + b.author + " (Read: " + (b.readDate || '—') + ", Rating: " + stars + ")\n";
+        }
     }
-	
-}
+
     downloadFile(content, 'My_LitHub_Lists.txt', 'text/plain');
     showToast('Exported as TXT!');
+}
 
-
-// Export as CSV
 function exportAsCSV() {
-    let content = "TYPE,TITLE,AUTHOR,DATE ADDED/READ,RATING,NO. OF PAGES\n\n";
+    var content = "TYPE,TITLE,AUTHOR,DATE ADDED/READ,RATING,NO. OF PAGES\n\n";
 
-    for (let i = 0; i < wishlistBooks.length; i++) {
-        const book = wishlistBooks[i];
-		content += "Wishlist,\"" + book.title + "\",\"" + book.author + "\"," + book.savedDate + ",," + (book.pages || '') + "\n";}
-    content += "\n";
-    for (let i = 0; i < readBooks.length; i++) {
-        const book = readBooks[i];
-        content += "Already Read,\"" + book.title + "\",\"" + book.author + "\"," + book.dateRead + "," + (book.rating || '') + "," + (book.pages || '') + "\n";
+    for (var i = 0; i < wishlistBooks.length; i++) {
+        var b = wishlistBooks[i];
+        content += 'Wishlist,"' + b.title + '","' + b.author + '",' + (b.addedAt || '') + ',,' + (b.pageCount || '') + '\n';
     }
 
-    downloadFile(content, "My_LitHub_Lists.csv", "text/csv");
+    content += '\n';
+
+    for (var i = 0; i < readBooks.length; i++) {
+        var b = readBooks[i];
+        content += 'Already Read,"' + b.title + '","' + b.author + '",' + (b.readDate || '') + ',' + (b.rating || '') + ',' + (b.pageCount || '') + '\n';
+    }
+
+    downloadFile(content, 'My_LitHub_Lists.csv', 'text/csv');
     showToast('Exported as CSV!');
 }
 
-// Helper: Download file (KEEP AS IS)
 function downloadFile(content, filename, mimeType) {
-    const blob = new Blob([content], { type: mimeType });
-    const link = document.createElement('a');
+    var blob = new Blob([content], { type: mimeType });
+    var link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = filename;
     link.click();
     URL.revokeObjectURL(link.href);
 }
 
+// =============================================================================
+//  UI HELPERS
+// =============================================================================
 
-// ------------------------UI FUNCTIONS (KEEP YOUR EXISTING CODE)---------------------
-
-//Switching between tabs
 function switchTab(tab) {
-    const wishlistTab = document.getElementById('wishlistTab');
-    const readTab = document.getElementById('readTab');
-    const tabs = document.querySelectorAll('.tab-btn');
+    var wishlistTab = document.getElementById('wishlistTab');
+    var readTab     = document.getElementById('readTab');
+    var btns = document.querySelectorAll('.tab-btn');
+    var btnWish = btns[0];
+    var btnRead = btns[1];
 
     if (tab === 'wishlist') {
         wishlistTab.style.display = 'block';
-        readTab.style.display = 'none';
-        tabs[0].classList.add('active');
-        tabs[1].classList.remove('active');
+        readTab.style.display     = 'none';
+        btnWish.classList.add('active');
+        btnRead.classList.remove('active');
     } else {
         wishlistTab.style.display = 'none';
-        readTab.style.display = 'block';
-        tabs[0].classList.remove('active');
-        tabs[1].classList.add('active');
+        readTab.style.display     = 'block';
+        btnWish.classList.remove('active');
+        btnRead.classList.add('active');
     }
 }
 
-// Toast notification (KEEP AS IS)
 function showToast(message) {
-    const toast = document.createElement('div');
+    var toast = document.createElement('div');
     toast.className = 'toast-notification';
-    toast.innerHTML = message;
+    toast.textContent = message;
     document.body.appendChild(toast);
-
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
+    setTimeout(function() { toast.remove(); }, 3000);
 }
 
-
-// Logout (MODIFIED - call backend logout)
-async function logout(e) {
+function logout(e) {
     e.preventDefault();
     if (confirm('Are you sure you want to log out?')) {
-        await fetch('/LitHubBackend/logout', { method: 'POST' });
         showToast('Logged out successfully! Redirecting to Home page...');
-        setTimeout(() => {
-            window.location.href = 'HomePage.html';
-        }, 1000);
+        setTimeout(function() { window.location.href = 'HomePage.html'; }, 1000);
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', logout);
-    }
-});
-
-
-//Initializing the dashboard (MODIFIED - fetch data from backend)
-async function initialize() {
-    await fetchUserData();
-    await fetchStats();
-    await fetchWishlist();
-    await fetchReadBooks();
+/** Prevent XSS when injecting user data into onclick="" attributes */
+function escapeHtml(str) {
+    return String(str)
+        .replace(/\\/g, '\\\\')
+        .replace(/'/g, "\\'")
+        .replace(/"/g, '&quot;');
 }
-
-initialize();
