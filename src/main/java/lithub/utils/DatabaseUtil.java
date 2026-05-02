@@ -5,8 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseUtil {
-    private static final String URL = "";
-    private static final String USERNAME = "";
+    private static final String URL = "jbdc:mysql://localhost:3306/ltihub_db?useSSL=false&serverTimezone=UTC";
+    private static final String USERNAME = "root";
     private static final String PASSWORD = "";  // ADD YOUR PASSWORD HERE BUT REMEMBER TO REMOVE IT BEFORE PUSHING 
     
     static {

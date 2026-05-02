@@ -19,7 +19,6 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         
         try (Connection conn = DatabaseUtil.getConnection()) {
-            // Simple query - no password hash
             String sql = "SELECT user_id, username, email, full_name FROM users WHERE email = ? AND password_hash = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, email);
