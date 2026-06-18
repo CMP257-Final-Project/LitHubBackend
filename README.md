@@ -82,7 +82,7 @@ POST /LitHubBackend/SaveBookServlet?userId={id}&bookId={id}
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 lithub-backend/
