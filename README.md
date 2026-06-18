@@ -49,15 +49,6 @@ GET /api/dashboard?userId={id}
 POST /api/book-action
 ```
 
-**Request Body:**
-```json
-{
-    "userId": 1,
-    "action": "markRead",
-    "userBookId": 101
-}
-```
-
 **Available Actions:**
 - `markRead` - Move book from wishlist to read
 - `removeWishlist` - Remove from wishlist
@@ -79,7 +70,6 @@ GET /api/user-clubs?userId={id}
 ```
 POST /LitHubBackend/SaveBookServlet?userId={id}&bookId={id}
 ```
-
 ---
 
 ##  Project Structure
@@ -87,25 +77,17 @@ POST /LitHubBackend/SaveBookServlet?userId={id}&bookId={id}
 ```
 lithub-backend/
 ├── src/main/java/lithub/
-│   ├── servlets/
-│   │   ├── BookActionServlet.java
-│   │   ├── SaveBookServlet.java
-│   │   ├── DashboardServlet.java
-│   │   ├── BlogsServlet.java
-│   │   └── ClubsServlet.java
-│   ├── utils/
-│   │   └── DatabaseUtil.java
-│   └── models/
-│       ├── User.java
-│       ├── Book.java
-│       └── UserBook.java
-├── database/
-│   ├── schema.sql
-│   └── sample_data.sql
-├── README.md
-└── LICENSE
+│       │         ├── lithubrepository/
+│       │         ├── models/
+│       │         ├── servlets/
+│       │         └── utils/
+│       └── webapp/
+│           ├── Img/
+│           ├── META-INF/
+│           └── WEB-INF/  
+├── .gitignore
+└── README.md
 ```
-
 ---
 
 ##  Related Repositories
